@@ -1,4 +1,4 @@
-const contactRepository = require("../repositories/contactRepository");
+const contactRepository = require('../repositories/contactRepository');
 
 class ContactController {
   async index(request, response) {
@@ -14,7 +14,7 @@ class ContactController {
     if (contact) {
       return response.status(200).json(contact);
     }
-    response.status(404).json({ error: "Contact not found" });
+    response.status(404).json({ error: 'Contact not found' });
   }
 
   async store(request, response) {
@@ -22,12 +22,12 @@ class ContactController {
 
     const emailExist = await contactRepository.findByEmail(email);
     if (!name) {
-      response.status(400).json({ error: "Invalid contact. Name is required" });
+      response.status(400).json({ error: 'Invalid contact. Name is required' });
     } else if (emailExist) {
-      response.status(400).json({ error: "This e-mail is already taken" });
+      response.status(400).json({ error: 'This e-mail is already taken' });
     } else {
       await contactRepository.create({ name, email, phone });
-      response.status(201).json({ message: "New contact created" });
+      response.status(201).json({ message: 'New contact created' });
     }
   }
 
@@ -35,11 +35,12 @@ class ContactController {
     const { id } = request.params;
     const { name, email, phone, category_id } = request.body;
     const idExist = contactRepository.findByID(id);
+
     if (!idExist) {
-      response.status(404).json({ error: "Contact not found" });
+      response.status(404).json({ error: 'Contact not found' });
     } else {
       await contactRepository.update(id, { name, email, phone, category_id });
-      response.status(200).json({ sucess: "Contact updated" });
+      response.status(200).json({ sucess: 'Contact updated' });
     }
   }
 

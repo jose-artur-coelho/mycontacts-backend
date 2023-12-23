@@ -1,4 +1,4 @@
-const db = require("../../database");
+const db = require('../../database');
 
 class contactRepository {
   async create(contact) {
@@ -10,21 +10,26 @@ class contactRepository {
     return row;
   }
 
-  async findAll(orderBy = "asc") {
-    const direction = orderBy.toLowerCase() === "desc" ? "desc" : "asc";
-    const rows = await db.query("select * from contacts order by name asc");
+  async findAll(orderBy = 'asc') {
+    const direction = orderBy.toLowerCase() === 'desc' ? 'desc' : 'asc';
+    const rows = await db.query(
+      `select * from contacts order by name ${direction}`
+    );
     return rows;
   }
+
   async findByID(id) {
-    const [row] = await db.query("select * from contacts where id = $1", [id]);
+    const [row] = await db.query('select * from contacts where id = $1', [id]);
     return row;
   }
+
   async findByEmail(email) {
-    const [row] = await db.query("select * from contacts where email = $1", [
+    const [row] = await db.query('select * from contacts where email = $1', [
       email,
     ]);
     return row;
   }
+
   async update(id, { name, email, phone, category_id }) {
     const selectedId = id;
     const [row] = await db.query(
@@ -38,7 +43,7 @@ class contactRepository {
   }
 
   async delete(id) {
-    const deleteOp = await db.query("delete from contacts where id = $1", [id]);
+    const deleteOp = await db.query('delete from contacts where id = $1', [id]);
     return deleteOp;
   }
 }
