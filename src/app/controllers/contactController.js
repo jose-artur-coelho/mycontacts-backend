@@ -1,16 +1,16 @@
-const contactRepository = require('../repositories/contactRepository');
+const ContactRepository = require('../repositories/contactsRepository');
 
 class ContactController {
   async index(request, response) {
     const { orderBy } = request.query;
-    const contacts = await contactRepository.findAll(orderBy);
+    const contacts = await ContactRepository.findAll(orderBy);
     response.json(contacts);
   }
 
   async show(request, response) {
     const { id } = request.params;
 
-    const contact = await contactRepository.findByID(id);
+    const contact = await ContactRepository.findByID(id);
     if (contact) {
       return response.status(200).json(contact);
     }
@@ -20,13 +20,13 @@ class ContactController {
   async store(request, response) {
     const { name, email, phone } = request.body;
 
-    const emailExist = await contactRepository.findByEmail(email);
+    const emailExist = await ContactRepository.findByEmail(email);
     if (!name) {
       response.status(400).json({ error: 'Invalid contact. Name is required' });
     } else if (emailExist) {
       response.status(400).json({ error: 'This e-mail is already taken' });
     } else {
-      await contactRepository.create({ name, email, phone });
+      await ContactRepository.create({ name, email, phone });
       response.status(201).json({ message: 'New contact created' });
     }
   }
@@ -34,19 +34,19 @@ class ContactController {
   async update(request, response) {
     const { id } = request.params;
     const { name, email, phone, category_id } = request.body;
-    const idExist = contactRepository.findByID(id);
+    const idExist = ContactRepository.findByID(id);
 
     if (!idExist) {
       response.status(404).json({ error: 'Contact not found' });
     } else {
-      await contactRepository.update(id, { name, email, phone, category_id });
+      await ContactRepository.update(id, { name, email, phone, category_id });
       response.status(200).json({ sucess: 'Contact updated' });
     }
   }
 
   async delete(request, response) {
     const { id } = request.params;
-    await contactRepository.delete(id);
+    await ContactRepository.delete(id);
     response.sendStatus(204);
   }
 }
