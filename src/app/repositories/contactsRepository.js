@@ -41,6 +41,7 @@ class ContactRepository {
 
   async update(id, { name, email, phone, category_id }) {
     const selectedId = id;
+
     const [row] = await db.query(
       `
     update contacts where id = ${selectedId}

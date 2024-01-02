@@ -18,7 +18,7 @@ class ContactController {
   }
 
   async store(request, response) {
-    const { name, email, phone } = request.body;
+    const { name, email, phone, category_id } = request.body;
 
     const emailExist = await ContactRepository.findByEmail(email);
     if (!name) {
@@ -26,7 +26,7 @@ class ContactController {
     } else if (emailExist) {
       response.status(400).json({ error: 'This e-mail is already taken' });
     } else {
-      await ContactRepository.create({ name, email, phone });
+      await ContactRepository.create({ name, email, phone, category_id });
       response.status(201).json({ message: 'New contact created' });
     }
   }
@@ -34,9 +34,9 @@ class ContactController {
   async update(request, response) {
     const { id } = request.params;
     const { name, email, phone, category_id } = request.body;
-    const idExist = ContactRepository.findByID(id);
+    const contactExist = await ContactRepository.findByID(id);
 
-    if (!idExist) {
+    if (!contactExist) {
       response.status(404).json({ error: 'Contact not found' });
     } else {
       await ContactRepository.update(id, { name, email, phone, category_id });
