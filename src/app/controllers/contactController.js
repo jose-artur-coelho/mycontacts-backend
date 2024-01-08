@@ -27,7 +27,7 @@ class ContactController {
       response.status(400).json({ error: 'This e-mail is already taken' });
     } else {
       await ContactRepository.create({ name, email, phone, category_id });
-      response.status(201).json({ message: 'New contact created' });
+      response.status(201).json({ sucess: 'New contact created' });
     }
   }
 
