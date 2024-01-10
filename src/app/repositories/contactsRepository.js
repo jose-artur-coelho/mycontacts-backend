@@ -34,7 +34,7 @@ class ContactRepository {
     const { name, phone, email, category_id } = contact;
     const [row] = await db.query(
       `insert into contacts(name, email, phone, category_id) values($1, $2, $3, $4) returning *`,
-      [name, phone, email, category_id]
+      [name, email, phone, category_id]
     );
     return row;
   }
