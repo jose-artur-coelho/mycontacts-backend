@@ -19,7 +19,7 @@ class ContactController {
         return response.status(404).json({ error: 'Contact not found' });
       }
     } else {
-      return response.status(400).json({ error: 'Invalid user id' });
+      return response.status(400).json({ error: 'Invalid contact id' });
     }
   }
 
@@ -85,14 +85,14 @@ class ContactController {
       });
       return response.status(200).json(contact);
     } else {
-      return response.status(400).json({ error: 'Invalid user id' });
+      return response.status(400).json({ error: 'Invalid contact id' });
     }
   }
 
   async delete(request, response) {
     const { id } = request.params;
     if (!isValidUUID(id)) {
-      return response.status(400).json({ error: 'Invalid user id' });
+      return response.status(400).json({ error: 'Invalid contact id' });
     }
     await ContactRepository.delete(id);
     return response.sendStatus(204);
