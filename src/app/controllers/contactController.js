@@ -72,7 +72,6 @@ class ContactController {
       }
       if (email) {
         const contactByEmail = await ContactRepository.findByEmail(email);
-
         if (contactByEmail && contactByEmail.id !== id) {
           return response
             .status(400)
