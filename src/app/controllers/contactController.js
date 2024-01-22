@@ -79,7 +79,7 @@ class ContactController {
         }
       }
 
-      const contact = await ContactRepository.update({
+      const contact = await ContactRepository.update(id, {
         name,
         email,
         phone,

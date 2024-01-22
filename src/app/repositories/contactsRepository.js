@@ -40,14 +40,14 @@ class ContactRepository {
   }
 
   async update(id, { name, email, phone, category_id }) {
-    const selectedId = id;
-
     const [row] = await db.query(
       `
-    update contacts where id = ${selectedId}
-    set name = $1, email = $2, phone = $3, category_id = $4
-    returning *`,
-      [name, email, phone, category_id]
+      update contacts 
+      set name = $2, email = $3, phone = $4, category_id = $5
+      where id = $1
+      returning *
+      `,
+      [id, name, email, phone, category_id]
     );
     return row;
   }
