@@ -72,6 +72,7 @@ class ContactController {
       }
       if (email) {
         const contactByEmail = await ContactRepository.findByEmail(email);
+        console.log(contactByEmail);
         if (contactByEmail && contactByEmail.id !== id) {
           return response
             .status(400)
@@ -79,7 +80,7 @@ class ContactController {
         }
       }
 
-      const contact = await ContactRepository.update({
+      const contact = await ContactRepository.update(id, {
         name,
         email,
         phone,
