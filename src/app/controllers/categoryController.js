@@ -50,7 +50,7 @@ class CategoryController {
 
     const idExist = await CategoriesRepository.findById(id);
     if (!idExist) {
-      response.status(404).json({ error: 'Ca' });
+      response.status(404).json({ error: 'Categoria não encontrada' });
     } else {
       await CategoriesRepository.delete(id);
       response.status(204);
